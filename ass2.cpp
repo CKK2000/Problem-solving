@@ -96,20 +96,66 @@ public:
 
 int main() {
     ComplaintManagement cm;
+    int choice;
 
-    cm.addComplaint("101", "Lucknow", "91687594");
-    cm.addComplaint("102", "Agra", "566685");
-    cm.addComplaint("103", "Hyderabad", "556655");
-    cm.addComplaint("104", "Indore", "6565645");
-    cm.addComplaint("105", "Banglore", "849");
-    cm.addComplaint("106", "Delhi", "656");
-    
+    do {
+        // Display menu options
+        cout << "\nState Electricity Board Complaint Management System" << endl;
+        cout << "--------------------------------------------------" << endl;
+        cout << "1. Register a New Complaint" << endl;
+        cout << "2. Display All Complaints" << endl;
+        cout << "3. Search Complaint by ID" << endl;
+        cout << "4. Remove Resolved Complaint by ID" << endl;
+        cout << "5. Check Complaint Alerts" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Enter your choice (1-6): ";
+        cin >> choice;
 
-    cm.checkComplaintsAlert();
-    cm.removeComplaint(3);
-    cm.displayAllComplaints();
+        switch (choice) {
+            case 1: {
+                string serviceno, address, contactno;
+                cout << "Enter service number: ";
+                cin >> serviceno;
 
-    cm.searchComplaintById(5);
+                cout << "Enter address: ";
+                cin.ignore(); // To clear the buffer
+                getline(cin, address);
+
+                cout << "Enter contact number: ";
+                cin >> contactno;
+
+                cm.addComplaint(serviceno, address, contactno);
+                break;
+            }
+            case 2:
+                cm.displayAllComplaints();
+                break;
+            case 3: {
+                int id;
+                cout << "Enter complaint ID to search: ";
+                cin >> id;
+                cm.searchComplaintById(id);
+                break;
+            }
+            case 4: {
+                int id;
+                cout << "Enter complaint ID to remove: ";
+                cin >> id;
+                cm.removeComplaint(id);
+                break;
+            }
+            case 5:
+                cm.checkComplaintsAlert();
+                break;
+            case 6:
+                cout << "Exiting program... Thank you!" << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please choose a valid option." << endl;
+                break;
+        }
+
+    } while (choice != 6); // Continue the loop until user chooses to exit
 
     return 0;
 }
