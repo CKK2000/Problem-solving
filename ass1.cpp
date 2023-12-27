@@ -124,18 +124,75 @@ public:
 };
 
 int main() {
-
-    // here I am Creating an instance of the Inventory class
+    // Creating an instance of the Inventory class
     Inventory inventory; 
+    int choice;
 
-    
-    inventory.addProduct("Soap", 100.0, "2023-08-18", 10);
-    inventory.addProduct("Tea", 500.0, "2022-07-08", 9);
-    inventory.addProduct("Biscuit", 80.0, "2023-09-10", 7);
+    do {
+        // Display menu options
+        cout << "\nSuper Bazaar Inventory Management System" << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "1. Add Product" << endl;
+        cout << "2. Display All Products" << endl;
+        cout << "3. Search Product by ID" << endl;
+        cout << "4. Remove Defective Product by ID" << endl;
+        cout << "5. Check Inventory Alerts" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Enter your choice (1-6): ";
+        cin >> choice;
 
-    
-    inventory.checkInventoryAlert();    
-    inventory.removeDefectiveProducts(3);
-    inventory.displayAllProducts();
-    return 0; 
+        switch (choice) {
+            case 1: {
+                string name, dom;
+                double price;
+                int qty;
+
+                cout << "Enter product name: ";
+                cin.ignore(); // To clear the buffer
+                getline(cin, name);
+
+                cout << "Enter product price: ";
+                cin >> price;
+
+                cout << "Enter date of manufacturing (YYYY-MM-DD): ";
+                cin.ignore();
+                getline(cin, dom);
+
+                cout << "Enter product quantity: ";
+                cin >> qty;
+
+                inventory.addProduct(name, price, dom, qty);
+                break;
+            }
+            case 2:
+                inventory.displayAllProducts();
+                break;
+            case 3: {
+                int id;
+                cout << "Enter product ID to search: ";
+                cin >> id;
+                inventory.searchProductById(id);
+                break;
+            }
+            case 4: {
+                int id;
+                cout << "Enter product ID to remove: ";
+                cin >> id;
+                inventory.removeDefectiveProducts(id);
+                break;
+            }
+            case 5:
+                inventory.checkInventoryAlert();
+                break;
+            case 6:
+                cout << "Exiting program... Thank you!" << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please choose a valid option." << endl;
+                break;
+        }
+
+    } while (choice != 6); // Continue the loop until user chooses to exit
+
+    return 0;
 }
